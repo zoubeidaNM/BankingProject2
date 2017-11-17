@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,24 +17,28 @@ public class Account {
     private long id;
 
     @NotNull
-    @NotEmpty
-    @Digits(integer=6, fraction=0)
+    @Size(min=6, max=6)
     private String accountNumber;
 
     @NotNull
-    @NotEmpty
-    private double sold;
+    private double balance;
 
     // a many to many relation ship
-    @ManyToMany(mappedBy = "accounts",fetch=FetchType.LAZY)
+    @ManyToMany(mappedBy = "accounts")
     private Set<BankUser> users;
 
     // a many to many relation ship
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(joinColumns = @JoinColumn(name="account_id"),inverseJoinColumns = @JoinColumn(name="transaction_id"))
+    @ManyToMany
     private Set<Transaction> transactions;
 
     public Account() {
+        balance=0.0;
+        transactions = new HashSet<Transaction>();
+        users = new HashSet<BankUser>();
+    }
+
+    public Account(String accountNumber) {
+        this.accountNumber = accountNumber;
         transactions = new HashSet<Transaction>();
         users = new HashSet<BankUser>();
     }
@@ -54,12 +59,12 @@ public class Account {
         this.accountNumber = accountNumber;
     }
 
-    public double getSold() {
-        return sold;
+    public double getBalance() {
+        return balance;
     }
 
-    public void setSold(double sold) {
-        this.sold = sold;
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public Set<BankUser> getUsers() {

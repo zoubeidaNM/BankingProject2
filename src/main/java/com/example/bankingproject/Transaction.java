@@ -39,7 +39,7 @@ public class Transaction {
     private String date;
 
     // a many to many relation ship
-    @ManyToMany(mappedBy = "transactions",fetch=FetchType.LAZY)
+    @ManyToMany(mappedBy = "transactions")
     private Set<Account> accounts;
 
     public Transaction() {

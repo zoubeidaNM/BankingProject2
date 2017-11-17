@@ -38,9 +38,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //I have a custom login form, but why can't I see my CSS?
                 .antMatchers("/css/**","/js/**","/img/**","/h2-console/**",
                         "/vendor/**", "/pug/**", "/scss/**",
-                        "/homepage", "/contact", "/register","/").permitAll()
-                .antMatchers("/user").access("hasAuthority('USER') or hasAuthority('MANAGER')")
-                .antMatchers("/admin").access("hasAuthority('USER')")
+                        "/", "/homepage", "/registeruser", "/registermanager","/contact", "/withdraw").permitAll()
+                .antMatchers("/index").access("hasAuthority('USER')")
+                .antMatchers("/managerindex").access("hasAuthority('MANAGER')")
                 //Want to see all different levels must alow secuirty to access these folders and make these accessible to anyone ion the browser
                 .anyRequest().authenticated()
                 .and()
@@ -72,8 +72,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     //In memeory authentitcation
     //allow authitication from database determine if user if has access or not.
     protected void configure (AuthenticationManagerBuilder auth) throws Exception{
-        System.out.println("memory auth.");
         auth.inMemoryAuthentication().withUser("user").password("password").authorities("USER");
+        auth.inMemoryAuthentication().withUser("manager").password("password").authorities("MANAGER");
         auth.userDetailsService(userDetailsServiceBean());
     }
 }

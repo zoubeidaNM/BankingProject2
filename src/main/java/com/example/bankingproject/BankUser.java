@@ -16,50 +16,67 @@ public class BankUser {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotNull
-    @NotEmpty
-    @Size(min=2)
-    private String name;
 
-    @NotNull
-    @Email
-    @NotEmpty
     private String email;
 
     @NotNull
     @NotEmpty
-    @Size(min=4)
+    @Size(min=4, max=20)
     private String password;
 
     @NotNull
     @NotEmpty
-    @Size(min=2)
-    private String firstName;
+    @Size(min=2, max=30)
+    private String lastName;
 
     @NotNull
     @NotEmpty
-    @Size(min=2)
-    private String lastName;
+    @Size(min=2, max=30)
+    private String firstName;
+
+   private String accountNumber;
+
 
     private boolean enabled;
 
     @NotNull
     @NotEmpty
-    @Size(min=2)
+    @Size(min=2, max=20)
     private String username;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name="user_id"),inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<UserRole> roles;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(joinColumns = @JoinColumn(name="user_id"),inverseJoinColumns = @JoinColumn(name="account_id"))
-    private Set<Account> accounts;
+    @ManyToMany
+     private Set<Account> accounts;
 
     public BankUser() {
+        accountNumber="";
         roles = new HashSet<UserRole>();
         accounts = new HashSet<Account>();
     }
+
+    public void setAccountNumber(String accountNumber) {
+        if(!accountNumber.isEmpty()) {
+            this.accountNumber = accountNumber;
+        }
+    }
+
+    public void createAccount(){
+        Account account = new Account(accountNumber);
+        addAccount(account);
+    }
+
+    public void addAccount(Account account){
+        accounts.add(account);
+    }
+
+
+    public void addRole(UserRole role){
+        roles.add(role);
+    }
+
 
     public long getId() {
         return id;
@@ -67,14 +84,6 @@ public class BankUser {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getEmail() {
@@ -141,12 +150,10 @@ public class BankUser {
         this.accounts = accounts;
     }
 
-    public void addAccount(Account account){
-        accounts.add(account);
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
 
-    public void addRole(UserRole role){
-        roles.add(role);
-    }
+
 }

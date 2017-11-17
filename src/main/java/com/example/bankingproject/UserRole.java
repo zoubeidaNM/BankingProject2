@@ -7,6 +7,8 @@ import java.util.Set;
 @Entity
 public class UserRole {
 
+
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
@@ -20,6 +22,11 @@ public class UserRole {
     public UserRole() {
         users = new HashSet<BankUser>();
     }
+
+    public UserRole(String role) {
+        this.role=role;
+    }
+
 
     public long getId() {
         return id;

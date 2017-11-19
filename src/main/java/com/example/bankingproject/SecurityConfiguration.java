@@ -38,15 +38,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //I have a custom login form, but why can't I see my CSS?
                 .antMatchers("/css/**","/js/**","/img/**","/h2-console/**",
                         "/vendor/**", "/pug/**", "/scss/**",
-                        "/", "/homepage", "/registeruser", "/registermanager","/contact", "/withdraw").permitAll()
-                .antMatchers("/index").access("hasAuthority('USER')")
-                .antMatchers("/managerindex").access("hasAuthority('MANAGER')")
+                        "/", "/homepage", "/registeruser", "/registermanager","/contact").permitAll()
+                .antMatchers("/welcome").access("hasAuthority('CUSTOMER') or hasAuthority('MANAGER')")
+                .antMatchers( "/user/**").access("hasAuthority('CUSTOMER')")
+                .antMatchers( "/manager/**").access("hasAuthority('MANAGER')")
                 //Want to see all different levels must alow secuirty to access these folders and make these accessible to anyone ion the browser
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
-                .formLogin().defaultSuccessUrl("/user",true)//Ading chaining for allhttp sercueity
+                .formLogin().defaultSuccessUrl("/welcome",true)//Ading chaining for allhttp sercueity
                 //Allows sucessful logout
                 .and()
                 .logout()
@@ -72,7 +73,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     //In memeory authentitcation
     //allow authitication from database determine if user if has access or not.
     protected void configure (AuthenticationManagerBuilder auth) throws Exception{
-        auth.inMemoryAuthentication().withUser("user").password("password").authorities("USER");
+        auth.inMemoryAuthentication().withUser("user").password("password").authorities("CUSTOMER");
         auth.inMemoryAuthentication().withUser("manager").password("password").authorities("MANAGER");
         auth.userDetailsService(userDetailsServiceBean());
     }

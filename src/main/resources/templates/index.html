@@ -9,19 +9,19 @@
     <meta name="author" content="">
     <title>SB Admin - Start Bootstrap Template</title>
     <!-- Bootstrap core CSS-->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom fonts for this template-->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Page level plugin CSS-->
-    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="/css/sb-admin.css" rel="stylesheet">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 <!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="index.html">Banking board</a>
+<nav th:fragment="navclass2" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="#">Customer board</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
             data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -30,42 +30,42 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                <a class="nav-link" href="/user">
+                <a class="nav-link" href="/user/dashboard">
                     <i class="fa fa-fw fa-dashboard"></i>
                     <span class="nav-link-text">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="/account">
+             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                <a class="nav-link" href="/user/listaccounts">
                     <i class="fa fa-fw fa-bank"></i>
-                    <span class="nav-link-text" th:inline="text">Account #[[${user.accountNumber}]]</span>
+                    <span class="nav-link-text">Bank Accounts</span>
                 </a>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="/account">
-                    <i class="fa fa-fw fa-bank"></i>
-                    <span class="nav-link-text">Account #000000</span>
-                </a>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="blank.html">
+                <a class="nav-link" href="/user/withdraw">
                     <i class="fa fa-fw fa-bank"></i>
                     <span class="nav-link-text">Withdraw Money</span>
                 </a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="blank.html">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Deposit">
+                <a class="nav-link" href="/user/deposit">
                     <i class="fa fa-fw fa-bank"></i>
                     <span class="nav-link-text">Deposit Money</span>
                 </a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="/withdraw">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Transfer">
+                <a class="nav-link" href="/user/transfer">
                     <i class="fa fa-fw fa-bank"></i>
                     <span class="nav-link-text">Transfer Money</span>
                 </a>
             </li>
-       </ul>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add Account">
+                <a class="nav-link" href="/user/newaccount">
+                    <i class="fa fa-fw fa-bank"></i>
+                    <span class="nav-link-text">Add Account</span>
+                </a>
+            </li>
+        </ul>
         <ul class="navbar-nav sidenav-toggler">
             <li class="nav-item">
                 <a class="nav-link text-center" id="sidenavToggler">
@@ -143,7 +143,7 @@
             <li class="nav-item">
                 <form class="form-inline my-2 my-lg-0 mr-lg-2">
                     <div class="input-group">
-                        <input class="form-control" type="text" placeholder="Search for...">
+                        <input class="form-control" type="text" placeholder="disabled for now" disabled="disabled">
                         <span class="input-group-btn">
                 <button class="btn btn-primary" type="button">
                   <i class="fa fa-search"></i>
@@ -170,48 +170,32 @@
         </ol>
         <!-- Icon Cards-->
         <div class="row">
-            <div class="col-xl-3 col-sm-6 mb-3">
+            <div th:each ="account : ${bankuser.accounts}" class="col-xl-3 col-sm-6 mb-3">
                 <div class="card text-white bg-primary o-hidden h-100">
-                    <div class="card-body">
-                        <div class="card-body-icon">
-                            <i class="fa fa-fw fa-comments"></i>
-                        </div>
-                        <div class="mr-5">Checking Account</div>
-                    </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
-                        <span class="float-left">Sold: $230.08</span>
-                        <span class="float-right">
-                <i class="fa fa-angle-right"></i>
-              </span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 mb-3">
-                <div class="card text-white bg-warning o-hidden h-100">
                     <div class="card-body">
                         <div class="card-body-icon">
                             <i class="fa fa-fw fa-list"></i>
                         </div>
-                        <div class="mr-5">Saving Account</div>
+                        <div th:inline="text" class="mr-5">Checking Account #[[${account.accountNumber}]]</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
-                        <span class="float-left">Sold: $3,835.07</span>
-                        <span class="float-right">
+                    <a class="card-footer text-white clearfix small z-1" th:href=@{/user/detail/{id}(id=${account.id})}>
+                <span th:inline="text" class="float-left">Balance: $[[${account.balance}]]</span>
+                <span class="float-right">
                 <i class="fa fa-angle-right"></i>
               </span>
-                    </a>
-                </div>
+                </a>
+            </div>
             </div>
             <div class="col-xl-3 col-sm-6 mb-3">
                 <div class="card text-white bg-success o-hidden h-100">
                     <div class="card-body">
                         <div class="card-body-icon">
-                            <i class="fa fa-fw fa-shopping-cart"></i>
+                            <i class="fa fa-fw fa-car"></i>
                         </div>
                         <div class="mr-5">Car Loan</div>
                     </div>
                     <a class="card-footer text-white clearfix small z-1" href="#">
-                        <span class="float-left">Sold: $12, 500.00</span>
+                        <span class="float-left">Balance: $12,500.00</span>
                         <span class="float-right">
                 <i class="fa fa-angle-right"></i>
               </span>
@@ -222,12 +206,12 @@
                 <div class="card text-white bg-danger o-hidden h-100">
                     <div class="card-body">
                         <div class="card-body-icon">
-                            <i class="fa fa-fw fa-support"></i>
+                            <i class="fa fa-fw fa-credit-card"></i>
                         </div>
                         <div class="mr-5">Credit Card</div>
                     </div>
                     <a class="card-footer text-white clearfix small z-1" href="#">
-                        <span class="float-left">Sold: $0.00</span>
+                        <span class="float-left">Balance: $0.00</span>
                         <span class="float-right">
                 <i class="fa fa-angle-right"></i>
               </span>
@@ -238,10 +222,10 @@
         <!-- Area Chart Example-->
    <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
-    <footer class="sticky-footer">
+    <footer th:fragment="footerclass2" class="sticky-footer">
         <div class="container">
             <div class="text-center">
-                <small>Copyright © Your Website 2017</small>
+                <small>Copyright © CareAboutYou Bank 2017</small>
             </div>
         </div>
     </footer>
@@ -250,7 +234,7 @@
         <i class="fa fa-angle-up"></i>
     </a>
     <!-- Logout Modal-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div th:fragment="logoutclass" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -260,28 +244,30 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
+                <form th:action="@{/logout}" method="post">
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary btn-block">Logout</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Page level plugin JavaScript-->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
+    <script src="/js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
-    <script src="js/sb-admin-datatables.min.js"></script>
-    <script src="js/sb-admin-charts.min.js"></script>
+    <script src="/js/sb-admin-datatables.min.js"></script>
+    <script src="/js/sb-admin-charts.min.js"></script>
 </div>
 </div>
 </body>

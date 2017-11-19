@@ -20,10 +20,10 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... strings) throws Exception {
         System.out.println("Loading data . . .");
 
-        roleRepository.save(new UserRole("USER"));
+        roleRepository.save(new UserRole("CUSTOMER"));
         roleRepository.save(new UserRole("MANAGER"));
 
         UserRole managerRole = roleRepository.findByRole("MANAGER");
-        UserRole userRole = roleRepository.findByRole("USER");
+        UserRole userRole = roleRepository.findByRole("CUSTOMER");
     }
 }

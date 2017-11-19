@@ -16,9 +16,6 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotNull
-    @NotEmpty
-    @Digits(integer=6, fraction=0)
     private String accountNumber;
 
     @NotNull
@@ -27,8 +24,6 @@ public class Transaction {
 
 
     @NotNull
-    @NotEmpty
-    @Digits(integer=20, fraction=2)
     private double amount;
 
     private String description;
@@ -38,12 +33,29 @@ public class Transaction {
     @DateTimeFormat(pattern = "MM/dd/YYYY")
     private String date;
 
+    private double accountBalance;
     // a many to many relation ship
     @ManyToMany(mappedBy = "transactions")
     private Set<Account> accounts;
 
     public Transaction() {
         accounts = new HashSet<Account>();
+    }
+
+    public double getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void setAccountBalance(double accountBalance) {
+        this.accountBalance = accountBalance;
+    }
+
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public long getId() {

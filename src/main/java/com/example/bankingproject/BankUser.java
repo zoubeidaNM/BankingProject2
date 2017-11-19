@@ -34,6 +34,7 @@ public class BankUser {
     @Size(min=2, max=30)
     private String firstName;
 
+    @NotNull
    private String accountNumber;
 
 
@@ -42,6 +43,7 @@ public class BankUser {
     @NotNull
     @NotEmpty
     @Size(min=2, max=20)
+    @Column(unique=true)
     private String username;
 
     @ManyToMany(fetch = FetchType.EAGER)

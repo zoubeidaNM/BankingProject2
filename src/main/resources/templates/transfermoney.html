@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>CareAboutYou Withdraw Money</title>
+    <title>CareAboutYou Transfer Money</title>
     <!-- Bootstrap core CSS-->
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom fonts for this template-->
@@ -27,37 +27,41 @@
             <li class="breadcrumb-item">
                 <a href="#">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">Withdraw Money</li>
+            <li class="breadcrumb-item active">Transfer Money</li>
         </ol>
-        <h3 th:field="*{user}"  th:inline="text">Hello [[${user.username}]]. Withdraw money from one of your accounts</h3>
+        <h3 th:field="*{user}"  th:inline="text">Hello [[${user.username}]]. Transfer money between your accounts</h3>
         <hr>
-        <form th:action="@{/user/withdraw}"method="post">
+        <hr>
+        <form th:action="@{/user/transfer}" method="post">
             <div th:if="${error}" class="has-error text-danger" th:text="${error_message}" ></div>
-            <p >Select an account to withdraw money from</p>
-        <select class="form-control" id="sel1"  name="number">
+            <p >Select an account to transfer money from</p>
+        <select class="form-control" id="sel1" name="accountnumber1">
             <option th:each="account :${user.accounts}" th:value="${account.accountNumber}"
-                    th:inline="text" name="options"><strong>Account Number: [[${account.accountNumber}]], Balance: [[${account.balance}]]</strong></option>
+                    th:inline="text" name="options">Account Number: [[${account.accountNumber}]],     Balance: [[${account.balance}]]</option>
         </select>
         <br/>
-        <p> Enter date (format: <strong>MM/dd/YYYY </strong>)</p>
-        <input class="form-control" id="withdrawdate" th:name="date" type="text" placeholder="Enter date (format: MM/dd/YYYY)"/>
+        <br/>
+        <p >Select an account to transfer money to</p>
+        <select class="form-control" id="sel2"  name="accountnumber2">
+            <option th:each="account :${user.accounts}" th:value="${account.accountNumber}"
+                    th:inline="text" name="options">Account Number: [[${account.accountNumber}]],     Balance: [[${account.balance}]]</option>
+        </select>
             <br/>
-        <p> Enter withdrawl amount</p>
-        <input class="form-control" id="withdrawinput" th:name="amount" type="text"
-               pattern="[0-9.]+" placeholder="Enter withdraw amount"/>
+            <p> Enter date (format: <strong>MM/dd/YYYY </strong>)</p>
+            <input class="form-control" id=transferdate" th:name="transferdate" type="text" placeholder="Enter date (format: MM/dd/YYYY)"/>
             <br/>
-        <p> Enter description</p>
-        <input class="form-control" id="withdrawdesc" th:name="description" type="text" placeholder="Enter description"/>
+        <p> Enter transfer amount</p>
+        <input class="form-control" id="depositinput" name="transferamount" type="text" pattern="[0-9.]+"
+               placeholder="Enter transfer amount"/>
         <hr>
-        <button type="submit" class="btn btn-primary btn-block" >Withdraw money</button>
+        <button type="submit" class="btn btn-primary btn-block" >Transfer money</button>
         </form>
         <!-- Blank div to give the page height to preview the fixed vs. static navbar-->
-        <div style="height: 1000px;"></div>
+        <div style="height: 500px;"></div>
     </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <div th:replace="index::footerclass2"></div>
-
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-angle-up"></i>

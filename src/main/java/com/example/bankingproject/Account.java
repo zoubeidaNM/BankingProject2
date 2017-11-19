@@ -18,6 +18,7 @@ public class Account {
 
     @NotNull
     @Size(min=6, max=6)
+    @Column(unique=true)
     private String accountNumber;
 
     @NotNull

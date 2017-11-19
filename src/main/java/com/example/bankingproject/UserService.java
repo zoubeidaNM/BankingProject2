@@ -30,7 +30,7 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
     public void saveUser(BankUser user) {
-        user.addRole (roleRepository.findByRole("USER"));
+        user.addRole (roleRepository.findByRole("CUSTOMER"));
         user.setEnabled(true);
         userRepository.save(user);
     }
